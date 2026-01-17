@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Honey Bee 💜</title>
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #5a189a, #9d4edd);
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+}
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+}
+
+#slideshow {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border: 5px solid white;
+    object-fit: cover;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    transition: opacity 1s ease-in-out;
+}
+
+h1 {
+    margin-top: 15px;
+    font-size: 2.3em;
+}
+
+#message {
+    margin-top: 15px;
+    font-size: 1.15em;
+    min-height: 120px;
+    white-space: pre-line;
+}
+
+.heart {
+    position: absolute;
+    font-size: 18px;
+    animation: float 6s infinite ease-in;
+    opacity: 0.8;
+}
+
+@keyframes float {
+    0% { bottom: 0; opacity: 1; }
+    100% { bottom: 100%; opacity: 0; }
+}
+
+#tap {
+    margin-top: 15px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+input, button {
+    padding: 15px;
+    border-radius: 30px;
+    border: none;
+    font-size: 1em;
+    margin-top: 10px;
+    width: 80%;
+}
+
+button {
+    background: #c77dff;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #e0aaff;
+}
+</style>
+</head>
+<body>
+
+<audio id="music" loop>
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PASSWORD SCREEN -->
+<div class="center" id="lock">
+    <h1>🔒 Private Page 💜</h1>
+    <p>Enter the password</p>
+    <input type="password" id="password" placeholder="Password">
+    <br>
+    <button onclick="unlock()">Unlock 💜</button>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="center" id="content" style="display:none;">
+    <img id="slideshow" src="img1.jpg" alt="Our Memories 💜">
+    <h1> Happy Birthday Mwihaki 💜 </h1>
+    <div id="message"></div>
+    <div id="tap">Tap anywhere 💜</div>
+</div>
+
+<script>
+const correctPassword = "mwihaki";
+
+// MUSIC
+let musicStarted = false;
+const music = document.getElementById("music");
+
+function startMusic() {
+    if (!musicStarted) {
+        music.play();
+        musicStarted = true;
+        document.getElementById("tap").style.display = "none";
+    }
+}
+
+document.body.addEventListener("click", startMusic);
+
+// PASSWORD FUNCTION
+function unlock() {
+    const input = document.getElementById("password").value.toLowerCase();
+    if(input === correctPassword) {
+        document.getElementById("lock").style.display = "none";
+        document.getElementById("content").style.display = "block";
+        startMusic();
+        typeMessage();
+    } else {
+        alert("You don't Love me 💔");
+    }
+}
+
+// SLIDESHOW
+const images = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img6.jpg"]; // add more here if you like
+let index = 0;
+const slideshow = document.getElementById("slideshow");
+
+setInterval(() => {
+    index = (index + 1) % images.length;
+    slideshow.style.opacity = 0;
+    setTimeout(() => {
+        slideshow.src = images[index];
+        slideshow.style.opacity = 1;
+    }, 500);
+}, 4000);
+
+// TYPING MESSAGE
+const text = `My Love 💜
+Every picture here is a memory,
+every memory is a piece of my heart.
+
+Thank you for the love,
+the laughter,
+and the beautiful moments we share.
+
+I choose you today,
+tomorrow,
+and always ❤️
+
+Happy 19th Birthday, my love 🎂`;
+
+let i = 0;
+function typeMessage() {
+    if (i < text.length) {
+        document.getElementById("message").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeMessage, 40);
+    }
+}
+
+// FLOATING HEARTS
+setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💜";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}, 300);
+</script>
+
+</body>
+</html>
